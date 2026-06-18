@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
@@ -11,40 +11,58 @@ export default function ScrollToNext() {
   const reducedMotion = useReducedMotion();
   const [activeIndex, setActiveIndex] = useState(-1);
   const [entered, setEntered] = useState(false);
-  const observerRef = useRef<IntersectionObserver | null>(null);
+  const frameRef = useRef(0);
 
   useEffect(() => {
     const timer = setTimeout(() => setEntered(true), reducedMotion ? 0 : 1500);
     return () => clearTimeout(timer);
   }, [reducedMotion]);
 
-  useEffect(() => {
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            const idx = sections.indexOf(entry.target.id);
-            if (idx !== -1) setActiveIndex(idx);
-          }
-        }
-      },
-      { threshold: 0.3, rootMargin: "-20% 0px -20% 0px" }
-    );
+  const getActiveIndex = useCallback(() => {
+    const scrollY = window.scrollY;
+    const viewportH = window.innerHeight;
+    const threshold = scrollY + viewportH * 0.4;
+    let current = -1;
 
-    for (const id of sections) {
-      const el = document.getElementById(id);
-      if (el) observerRef.current.observe(el);
+    for (let i = 0; i < sections.length; i++) {
+      const el = document.getElementById(sections[i]);
+      if (el && el.offsetTop <= threshold) {
+        current = i;
+      }
     }
 
-    return () => observerRef.current?.disconnect();
+    return current;
   }, []);
+
+  useEffect(() => {
+    const update = () => {
+      cancelAnimationFrame(frameRef.current);
+      frameRef.current = requestAnimationFrame(() => {
+        setActiveIndex(getActiveIndex());
+      });
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+
+    return () => {
+      cancelAnimationFrame(frameRef.current);
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [getActiveIndex]);
 
   const visible = entered && activeIndex >= 0 && activeIndex < sections.length - 1;
 
   const handleClick = () => {
-    const nextId = sections[activeIndex + 1];
-    if (nextId) {
-      document.getElementById(nextId)?.scrollIntoView({ behavior: "smooth" });
+    const current = getActiveIndex();
+    const nextIndex = current + 1;
+    if (nextIndex < sections.length) {
+      const el = document.getElementById(sections[nextIndex]);
+      if (el) {
+        el.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth" });
+      }
     }
   };
 

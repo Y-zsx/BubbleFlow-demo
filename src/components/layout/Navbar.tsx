@@ -26,23 +26,36 @@ export default function Navbar() {
   ];
 
   useEffect(() => {
+    let frame = 0;
+
     const onScroll = () => {
-      setScrolled(window.scrollY > 40);
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 40);
 
-      for (let i = navSectionIds.length - 1; i >= 0; i -= 1) {
-        const element = document.getElementById(navSectionIds[i]);
-        if (element && element.getBoundingClientRect().top <= 120) {
-          setActiveHash(`#${navSectionIds[i]}`);
-          return;
+        const threshold = window.scrollY + window.innerHeight * 0.4;
+        let current = "";
+
+        for (let i = navSectionIds.length - 1; i >= 0; i -= 1) {
+          const el = document.getElementById(navSectionIds[i]);
+          if (el && el.offsetTop <= threshold) {
+            current = `#${navSectionIds[i]}`;
+            break;
+          }
         }
-      }
 
-      setActiveHash("");
+        setActiveHash(current);
+      });
     };
 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   return (
