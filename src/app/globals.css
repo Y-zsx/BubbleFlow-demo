@@ -44,6 +44,7 @@
   --accent-brand-faint: rgba(93, 255, 243, 0.12);
   --accent-glow: rgba(93, 255, 243, 0.035);
   --nav-bg: rgba(5, 7, 10, 0.56);
+  --hero-gradient: linear-gradient(90deg, rgba(5,5,8,0.88) 0%, rgba(5,5,8,0.35) 46%, rgba(5,5,8,0.05) 75%);
 }
 
 .light {
@@ -68,6 +69,7 @@
   --primary-foreground: #ffffff;
   --border: rgba(0, 0, 0, 0.09);
   --ring: #0891b2;
+  --hero-gradient: linear-gradient(90deg, rgba(245,246,248,0.92) 0%, rgba(245,246,248,0.6) 46%, rgba(245,246,248,0.15) 75%);
 }
 
 @theme inline {

@@ -20,7 +20,7 @@ export default function Hero() {
       <div aria-hidden="true" className="absolute inset-0">
         <BubbleFlowHero />
       </div>
-      <div className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(90deg,rgba(0,0,0,0.72)_0%,rgba(0,0,0,0.28)_46%,rgba(0,0,0,0.04)_75%)]" />
+      <div className="pointer-events-none absolute inset-0 z-10" style={{ background: "var(--hero-gradient)" }} />
 
       <div className="section-container relative z-20 flex min-h-[100svh] items-end pb-20 pt-28 md:items-center md:pb-14">
         <div className="max-w-[620px]">
