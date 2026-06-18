@@ -55,7 +55,7 @@ export default function Footer() {
                   <li key={label}>
                     <a
                       href={href}
-                      className="text-[13px] font-normal transition-colors duration-200"
+                      className="inline-flex min-h-11 items-center text-[13px] font-normal transition-colors duration-200 md:min-h-0"
                       style={{ color: "var(--text-tertiary)" }}
                     >
                       {label}

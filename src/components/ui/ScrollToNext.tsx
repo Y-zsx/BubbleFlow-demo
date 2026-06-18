@@ -13,13 +13,11 @@ export default function ScrollToNext() {
   const [entered, setEntered] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
-  // Delay entrance so the hero has time to load
   useEffect(() => {
-    const timer = setTimeout(() => setEntered(true), 1500);
+    const timer = setTimeout(() => setEntered(true), reducedMotion ? 0 : 1500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [reducedMotion]);
 
-  // Track which section is in view
   useEffect(() => {
     observerRef.current = new IntersectionObserver(
       (entries) => {
@@ -41,7 +39,6 @@ export default function ScrollToNext() {
     return () => observerRef.current?.disconnect();
   }, []);
 
-  // Hide on last section or before any section is in view
   const visible = entered && activeIndex >= 0 && activeIndex < sections.length - 1;
 
   const handleClick = () => {
@@ -53,12 +50,13 @@ export default function ScrollToNext() {
 
   return (
     <motion.button
+      type="button"
       onClick={handleClick}
       aria-label="Scroll to next section"
       initial={{ opacity: 0 }}
       animate={{ opacity: visible ? 1 : 0 }}
       transition={{ duration: reducedMotion ? 0.01 : 0.4 }}
-      className="fixed bottom-8 left-1/2 z-40 flex h-10 w-10 -translate-x-1/2 cursor-pointer items-center justify-center rounded-full backdrop-blur-md transition-colors duration-300"
+      className="fixed bottom-8 left-1/2 z-40 flex h-12 w-12 -translate-x-1/2 cursor-pointer touch-manipulation items-center justify-center rounded-full border backdrop-blur-md transition-colors duration-300"
       style={{
         pointerEvents: visible ? "auto" : "none",
         borderColor: "var(--line)",

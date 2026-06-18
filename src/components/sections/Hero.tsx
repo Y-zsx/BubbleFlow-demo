@@ -16,7 +16,7 @@ export default function Hero() {
   const transition = { duration: reducedMotion ? 0.01 : 0.8, ease: [0.16, 1, 0.3, 1] as const };
 
   return (
-    <section className="relative min-h-[100svh] overflow-hidden" style={{ backgroundColor: "var(--surface-0)" }}>
+    <section id="hero" className="relative min-h-[100svh] overflow-hidden" style={{ backgroundColor: "var(--surface-0)" }}>
       <div aria-hidden="true" className="absolute inset-0">
         <BubbleFlowHero />
       </div>

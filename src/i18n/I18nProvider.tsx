@@ -36,7 +36,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const stored = localStorage.getItem("bf-locale") as Locale | null;
     if (stored && (stored === "zh-CN" || stored === "en")) {
-      setLocaleState(stored);
+      queueMicrotask(() => setLocaleState(stored));
     }
   }, []);
 

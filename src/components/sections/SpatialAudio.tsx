@@ -1,14 +1,35 @@
 "use client";
 
 import { Suspense, useMemo, useRef } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Edges, Float } from "@react-three/drei";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Edges, Float, PerspectiveCamera } from "@react-three/drei";
 import { motion, useInView } from "framer-motion";
 import * as THREE from "three";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { useTranslation } from "@/i18n/useTranslation";
 
 const CYAN = "#5DFFF3";
+
+function AdaptiveCamera() {
+  const { size } = useThree();
+  const isMobile = size.width < 640;
+  const isTablet = size.width < 900;
+  const position: [number, number, number] = isMobile
+    ? [0, 2.8, 8.8]
+    : isTablet
+      ? [0, 2.6, 7.2]
+      : [0, 2.5, 6];
+  const fov = isMobile ? 50 : isTablet ? 47 : 45;
+
+  return (
+    <PerspectiveCamera
+      makeDefault
+      position={position}
+      fov={fov}
+      onUpdate={(camera) => camera.lookAt(0, 0.3, 0)}
+    />
+  );
+}
 
 function Listener() {
   return (
@@ -158,15 +179,15 @@ export default function SpatialAudio() {
           initial={{ opacity: 0, scale: 0.98 }}
           animate={isInView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration, delay: reducedMotion ? 0 : 0.08 }}
-          className="aspect-[16/9] min-h-[360px] overflow-hidden rounded-lg border"
+          className="spatial-audio-visual overflow-hidden rounded-lg border"
           style={{ borderColor: "var(--line)", backgroundColor: "var(--surface-2)" }}
         >
           <Canvas
-            camera={{ position: [0, 2.5, 6], fov: 45 }}
             dpr={[1, 1.7]}
             gl={{ antialias: true, alpha: true }}
             style={{ background: "transparent" }}
           >
+            <AdaptiveCamera />
             <Suspense fallback={null}>
               <ambientLight intensity={0.3} />
               <directionalLight position={[3, 4, 3]} intensity={0.8} />

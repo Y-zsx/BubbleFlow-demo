@@ -115,6 +115,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
@@ -123,6 +124,7 @@ html *:not(canvas):not(svg):not(svg *):not([style*="animation"]) {
 }
 
 body {
+  min-width: 320px;
   overflow-x: hidden;
   background: var(--background);
   color: var(--foreground);
@@ -166,6 +168,7 @@ a {
 
 .section-padding {
   padding: 104px 0;
+  scroll-margin-top: 80px;
 }
 
 .section-container {
@@ -261,6 +264,12 @@ a {
   color: var(--text-primary);
 }
 
+.spatial-audio-visual {
+  min-height: 360px;
+  aspect-ratio: 16 / 9;
+}
+
+
 @media (max-width: 768px) {
   .section-padding {
     padding: 72px 0;
@@ -276,6 +285,26 @@ a {
 
   .section-title {
     font-size: 30px;
+  }
+
+  .spatial-audio-visual {
+    min-height: 280px;
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (max-width: 420px) {
+  .section-container {
+    padding-inline: 16px;
+  }
+
+  .section-title {
+    font-size: 28px;
+  }
+
+  .spatial-audio-visual {
+    min-height: 260px;
+    aspect-ratio: 16 / 10;
   }
 }
 

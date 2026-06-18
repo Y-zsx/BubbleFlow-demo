@@ -8,6 +8,8 @@ import BrandLogo from "@/components/ui/BrandLogo";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 
+const navSectionIds = ["product", "scenes", "spatial-audio", "features", "specs"];
+
 export default function Navbar() {
   const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
@@ -26,12 +28,11 @@ export default function Navbar() {
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 40);
-      const sections = navLinks.map((link) => link.href.slice(1));
 
-      for (let i = sections.length - 1; i >= 0; i -= 1) {
-        const element = document.getElementById(sections[i]);
+      for (let i = navSectionIds.length - 1; i >= 0; i -= 1) {
+        const element = document.getElementById(navSectionIds[i]);
         if (element && element.getBoundingClientRect().top <= 120) {
-          setActiveHash(`#${sections[i]}`);
+          setActiveHash(`#${navSectionIds[i]}`);
           return;
         }
       }

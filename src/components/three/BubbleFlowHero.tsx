@@ -1,12 +1,13 @@
 "use client";
 
 import * as THREE from "three";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
   ContactShadows,
   Float,
   Line,
   Edges,
+  PerspectiveCamera,
   Sparkles,
 } from "@react-three/drei";
 import { Suspense, useMemo, useRef } from "react";
@@ -15,6 +16,27 @@ import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const CYAN = "#5DFFF3";
 const BLACK = "#030505";
+
+function AdaptiveHeroCamera() {
+  const { size } = useThree();
+  const isMobile = size.width < 640;
+  const isTablet = size.width < 900;
+  const position: [number, number, number] = isMobile
+    ? [0, 1.25, 8.8]
+    : isTablet
+      ? [0, 1.2, 7.2]
+      : [0, 1.15, 6.2];
+  const fov = isMobile ? 48 : isTablet ? 40 : 34;
+
+  return (
+    <PerspectiveCamera
+      makeDefault
+      position={position}
+      fov={fov}
+      onUpdate={(camera) => camera.lookAt(0, 0, 0)}
+    />
+  );
+}
 
 // ============================================
 // 倒角八边形几何体
@@ -198,6 +220,9 @@ function BubbleFlowDevice() {
 // ============================================
 function ProductScene({ reducedMotion }: { reducedMotion: boolean }) {
   const root = useRef<THREE.Group>(null);
+  const { size } = useThree();
+  const sceneScale = size.width < 640 ? 0.72 : size.width < 900 ? 0.88 : 1;
+
   useFrame(({ clock, pointer }) => {
     if (!root.current || reducedMotion) return;
     const t = clock.getElapsedTime();
@@ -206,7 +231,7 @@ function ProductScene({ reducedMotion }: { reducedMotion: boolean }) {
     root.current.position.y = Math.sin(t * 0.8) * 0.035;
   });
   return (
-    <group ref={root} rotation={[-0.08, -0.35, 0]} position={[0, -0.15, 0]}>
+    <group ref={root} scale={sceneScale} rotation={[-0.08, -0.35, 0]} position={[0, -0.15, 0]}>
       <BubbleFlowDevice />
       <FloatingBubbleNode position={[-3.4, 1.45, -1.1]} scale={0.8} speed={1.1} />
       <FloatingBubbleNode position={[3.2, 1.65, -0.6]} scale={1.15} speed={0.9} />
@@ -249,9 +274,9 @@ export default function BubbleFlowHero() {
         <Canvas
           shadows
           dpr={[1, 1.7]}
-          camera={{ position: [0, 1.15, 6.2], fov: 34 }}
           gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
         >
+          <AdaptiveHeroCamera />
           <color attach="background" args={["#000000"]} />
           <fog attach="fog" args={["#000000", 5, 10]} />
           <ambientLight intensity={0.18} />
