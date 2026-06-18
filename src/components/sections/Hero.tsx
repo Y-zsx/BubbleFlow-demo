@@ -23,7 +23,7 @@ export default function Hero() {
       <div className="pointer-events-none absolute inset-0 z-10" style={{ background: "var(--hero-gradient)" }} />
 
       <div className="section-container relative z-20 flex min-h-[100svh] items-end pb-20 pt-28 md:items-center md:pb-14">
-        <div className="max-w-[620px]">
+        <div className="max-w-[620px]" style={{ textShadow: "0 1px 12px rgba(0,0,0,0.3)" }}>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
