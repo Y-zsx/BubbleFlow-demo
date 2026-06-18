@@ -58,8 +58,13 @@ export default function ScrollToNext() {
       initial={{ opacity: 0 }}
       animate={{ opacity: visible ? 1 : 0 }}
       transition={{ duration: reducedMotion ? 0.01 : 0.4 }}
-      className="fixed bottom-8 left-1/2 z-40 flex h-10 w-10 -translate-x-1/2 cursor-pointer items-center justify-center rounded-full border border-white/[0.10] bg-[rgba(5,7,10,0.6)] text-white/40 backdrop-blur-md transition-colors duration-300 hover:border-[#5DFFF3]/30 hover:text-[#5DFFF3]/80"
-      style={{ pointerEvents: visible ? "auto" : "none" }}
+      className="fixed bottom-8 left-1/2 z-40 flex h-10 w-10 -translate-x-1/2 cursor-pointer items-center justify-center rounded-full backdrop-blur-md transition-colors duration-300"
+      style={{
+        pointerEvents: visible ? "auto" : "none",
+        borderColor: "var(--line)",
+        backgroundColor: "var(--nav-bg)",
+        color: "var(--text-tertiary)",
+      }}
     >
       <motion.span
         animate={reducedMotion || !visible ? {} : { y: [0, 3, 0] }}

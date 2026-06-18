@@ -6,6 +6,7 @@ import { Edges, Float } from "@react-three/drei";
 import { motion, useInView } from "framer-motion";
 import * as THREE from "three";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { useTranslation } from "@/i18n/useTranslation";
 
 const CYAN = "#5DFFF3";
 
@@ -126,17 +127,18 @@ function SoundField() {
   );
 }
 
-const dimensions = [
-  { label: "方位", value: "声音从哪里来" },
-  { label: "距离", value: "声音离你有多远" },
-  { label: "运动", value: "声音如何经过身边" },
-];
-
 export default function SpatialAudio() {
+  const { t } = useTranslation();
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
   const reducedMotion = useReducedMotion();
   const duration = reducedMotion ? 0.01 : 0.7;
+
+  const dimensions = [
+    { label: t("audio.dim1Label"), value: t("audio.dim1Value") },
+    { label: t("audio.dim2Label"), value: t("audio.dim2Value") },
+    { label: t("audio.dim3Label"), value: t("audio.dim3Value") },
+  ];
 
   return (
     <section id="spatial-audio" ref={ref} className="section-padding relative overflow-hidden">
@@ -147,18 +149,17 @@ export default function SpatialAudio() {
           transition={{ duration }}
           className="section-header"
         >
-          <span className="section-kicker">听觉原理</span>
-          <h2 className="section-title">闭上眼，也知道声音在哪里</h2>
-          <p className="section-description">
-            人耳天生能判断声音的方向、距离和运动。多个节点围绕听者协同，让这种本能重新回到音乐与内容体验。
-          </p>
+          <span className="section-kicker">{t("audio.kicker")}</span>
+          <h2 className="section-title">{t("audio.title")}</h2>
+          <p className="section-description">{t("audio.description")}</p>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           animate={isInView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration, delay: reducedMotion ? 0 : 0.08 }}
-          className="aspect-[16/9] min-h-[360px] overflow-hidden rounded-lg border border-white/[0.07] bg-[#050709]"
+          className="aspect-[16/9] min-h-[360px] overflow-hidden rounded-lg border"
+          style={{ borderColor: "var(--line)", backgroundColor: "var(--surface-2)" }}
         >
           <Canvas
             camera={{ position: [0, 2.5, 6], fov: 45 }}
@@ -181,10 +182,11 @@ export default function SpatialAudio() {
               initial={{ opacity: 0, y: 12 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration, delay: reducedMotion ? 0 : 0.16 + index * 0.06 }}
-              className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 text-center"
+              className="rounded-lg border p-4 text-center"
+              style={{ borderColor: "var(--line)", backgroundColor: "var(--surface-card)" }}
             >
-              <span className="block text-[15px] font-medium text-[#5DFFF3]/72">{item.label}</span>
-              <span className="mt-1 block text-[12px] text-white/38">{item.value}</span>
+              <span className="block text-[15px] font-medium" style={{ color: "var(--accent-brand-muted)" }}>{item.label}</span>
+              <span className="mt-1 block text-[12px]" style={{ color: "var(--text-tertiary)" }}>{item.value}</span>
             </motion.div>
           ))}
         </div>

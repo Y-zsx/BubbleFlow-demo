@@ -3,21 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-
-const productPoints = [
-  {
-    title: "听见方向",
-    description: "歌声、乐器与环境音不再挤在同一个平面，而是从不同方位自然出现。",
-  },
-  {
-    title: "感受远近",
-    description: "声音有了距离和层次，轻声更贴近，场面更开阔，情绪也更真实。",
-  },
-  {
-    title: "跟随运动",
-    description: "声音可以在空间中移动，让音乐、游戏与演出拥有更鲜活的现场感。",
-  },
-];
+import { useTranslation } from "@/i18n/useTranslation";
 
 function ProductDiagram() {
   const centerX = 300;
@@ -116,10 +102,17 @@ function ProductDiagram() {
 }
 
 export default function ProductShowcase() {
+  const { t } = useTranslation();
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
   const reducedMotion = useReducedMotion();
   const duration = reducedMotion ? 0.01 : 0.7;
+
+  const productPoints = [
+    { title: t("product.card1Title"), description: t("product.card1Desc") },
+    { title: t("product.card2Title"), description: t("product.card2Desc") },
+    { title: t("product.card3Title"), description: t("product.card3Desc") },
+  ];
 
   return (
     <section id="product" ref={ref} className="section-padding relative overflow-hidden">
@@ -130,11 +123,9 @@ export default function ProductShowcase() {
           transition={{ duration }}
           className="section-header"
         >
-          <span className="section-kicker">产品体验</span>
-          <h2 className="section-title">不是更响，是更有空间感</h2>
-          <p className="section-description">
-            BubbleFlow 用多个无线声音节点把声音放进整个房间，让方位、距离、运动和层次都能被听见。
-          </p>
+          <span className="section-kicker">{t("product.kicker")}</span>
+          <h2 className="section-title">{t("product.title")}</h2>
+          <p className="section-description">{t("product.description")}</p>
         </motion.div>
 
         <motion.div
@@ -153,10 +144,14 @@ export default function ProductShowcase() {
               initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration, delay: reducedMotion ? 0 : 0.16 + index * 0.07 }}
-              className="rounded-lg border border-white/[0.07] bg-white/[0.025] p-5 text-center transition-colors hover:border-[#5DFFF3]/20 hover:bg-white/[0.04]"
+              className="rounded-lg border p-5 text-center transition-colors"
+              style={{
+                borderColor: "var(--line)",
+                backgroundColor: "var(--surface-card)",
+              }}
             >
-              <h3 className="text-[16px] font-medium text-white/88">{point.title}</h3>
-              <p className="mt-2 text-[13px] leading-[1.7] text-white/42">{point.description}</p>
+              <h3 className="text-[16px] font-medium" style={{ color: "var(--text-primary)" }}>{point.title}</h3>
+              <p className="mt-2 text-[13px] leading-[1.7]" style={{ color: "var(--text-tertiary)" }}>{point.description}</p>
             </motion.article>
           ))}
         </div>
