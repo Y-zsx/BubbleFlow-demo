@@ -38,7 +38,7 @@ export default function Features() {
           <p className="section-description">{t("features.description")}</p>
         </motion.div>
 
-        <div className="grid gap-px overflow-hidden border-y sm:grid-cols-2 lg:grid-cols-3" style={{ borderColor: "var(--line)", backgroundColor: "var(--line)" }}>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => {
             const Icon = featureIcons[index];
             return (
@@ -47,11 +47,11 @@ export default function Features() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration, delay: reducedMotion ? 0 : 0.05 + index * 0.05 }}
-                className="group min-h-64 px-7 py-8 transition-colors md:px-9 md:py-10"
-                style={{ backgroundColor: "var(--surface-1)" }}
+                className="group rounded-lg border p-8 transition-colors md:p-10"
+                style={{ borderColor: "var(--line)", backgroundColor: "var(--surface-card)" }}
               >
                 <Icon aria-hidden="true" className="h-7 w-7" style={{ color: "var(--accent-brand-muted)" }} strokeWidth={1.35} />
-                <div className="mt-12">
+                <div className="mt-10">
                   <h3 className="text-[18px] font-medium" style={{ color: "var(--text-primary)" }}>{feature.title}</h3>
                   <p className="mt-3 max-w-sm text-[14px] leading-[1.75]" style={{ color: "var(--text-tertiary)" }}>
                     {feature.description}
