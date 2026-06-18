@@ -45,6 +45,8 @@
   --accent-glow: rgba(93, 255, 243, 0.035);
   --nav-bg: rgba(5, 7, 10, 0.56);
   --hero-gradient: linear-gradient(90deg, rgba(5,5,8,0.88) 0%, rgba(5,5,8,0.35) 46%, rgba(5,5,8,0.05) 75%);
+  --waveform-stroke: rgba(93, 255, 243, 0.1);
+  --waveform-stroke-faint: rgba(93, 255, 243, 0.05);
 }
 
 .light {
@@ -52,24 +54,26 @@
   --surface-1: #ebedf0;
   --surface-2: #f0f1f3;
   --surface-3: #e8eaed;
-  --surface-card: rgba(0, 0, 0, 0.025);
+  --surface-card: rgba(0, 0, 0, 0.03);
   --text-primary: rgba(0, 0, 0, 0.88);
-  --text-secondary: rgba(0, 0, 0, 0.55);
-  --text-tertiary: rgba(0, 0, 0, 0.32);
-  --line: rgba(0, 0, 0, 0.08);
-  --line-strong: rgba(0, 0, 0, 0.14);
+  --text-secondary: rgba(0, 0, 0, 0.6);
+  --text-tertiary: rgba(0, 0, 0, 0.4);
+  --line: rgba(0, 0, 0, 0.12);
+  --line-strong: rgba(0, 0, 0, 0.2);
   --accent-brand: #0891b2;
-  --accent-brand-muted: rgba(8, 145, 178, 0.6);
-  --accent-brand-faint: rgba(8, 145, 178, 0.1);
-  --accent-glow: rgba(8, 145, 178, 0.04);
-  --nav-bg: rgba(245, 246, 248, 0.82);
+  --accent-brand-muted: rgba(8, 145, 178, 0.75);
+  --accent-brand-faint: rgba(8, 145, 178, 0.14);
+  --accent-glow: rgba(8, 145, 178, 0.06);
+  --nav-bg: rgba(245, 246, 248, 0.88);
   --background: #f5f6f8;
   --foreground: #1a1a1f;
   --primary: #0891b2;
   --primary-foreground: #ffffff;
-  --border: rgba(0, 0, 0, 0.09);
+  --border: rgba(0, 0, 0, 0.12);
   --ring: #0891b2;
-  --hero-gradient: linear-gradient(90deg, rgba(245,246,248,0.92) 0%, rgba(245,246,248,0.6) 46%, rgba(245,246,248,0.15) 75%);
+  --hero-gradient: linear-gradient(90deg, rgba(245,246,248,0.94) 0%, rgba(245,246,248,0.65) 46%, rgba(245,246,248,0.18) 75%);
+  --waveform-stroke: rgba(8, 145, 178, 0.25);
+  --waveform-stroke-faint: rgba(8, 145, 178, 0.12);
 }
 
 @theme inline {
@@ -111,6 +115,11 @@
 
 html {
   scroll-behavior: smooth;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+html *:not(canvas):not(svg):not(svg *):not([style*="animation"]) {
+  transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 body {
