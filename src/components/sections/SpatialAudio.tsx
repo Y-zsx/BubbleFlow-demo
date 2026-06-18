@@ -120,6 +120,9 @@ function SoundPath({ from, index }: { from: [number, number, number]; index: num
 }
 
 function SoundField() {
+  const { size } = useThree();
+  const scale = size.width < 420 ? 0.6 : size.width < 640 ? 0.75 : size.width < 900 ? 0.88 : 1;
+
   const positions: [number, number, number][] = [
     [2.2, 0.8, 0],
     [-2.2, 0.6, 0],
@@ -130,7 +133,7 @@ function SoundField() {
   ];
 
   return (
-    <group>
+    <group scale={scale}>
       <Listener />
       {positions.map((position, index) => (
         <SoundNode key={index} position={position} delay={index * 0.8} />
