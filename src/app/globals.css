@@ -71,7 +71,7 @@
   --primary-foreground: #ffffff;
   --border: rgba(0, 0, 0, 0.12);
   --ring: #0891b2;
-  --hero-gradient: linear-gradient(90deg, rgba(245,246,248,0.94) 0%, rgba(245,246,248,0.65) 46%, rgba(245,246,248,0.18) 75%);
+  --hero-gradient: linear-gradient(90deg, rgba(245,246,248,0.82) 0%, rgba(245,246,248,0.35) 38%, rgba(245,246,248,0) 60%);
   --waveform-stroke: rgba(8, 145, 178, 0.25);
   --waveform-stroke-faint: rgba(8, 145, 178, 0.12);
 }
