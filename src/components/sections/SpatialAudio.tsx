@@ -121,7 +121,7 @@ function SoundPath({ from, index }: { from: [number, number, number]; index: num
 
 function SoundField() {
   const { size } = useThree();
-  const scale = size.width < 420 ? 0.6 : size.width < 640 ? 0.75 : size.width < 900 ? 0.88 : 1;
+  const scale = size.width < 420 ? 0.82 : size.width < 640 ? 0.88 : size.width < 900 ? 0.95 : 1;
 
   const positions: [number, number, number][] = [
     [2.2, 0.8, 0],
