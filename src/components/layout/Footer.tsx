@@ -1,5 +1,3 @@
-"use client";
-
 import BrandLogo from "@/components/ui/BrandLogo";
 
 const footerColumns = [

@@ -1,5 +1,3 @@
-"use client";
-
 export default function WaveformDivider() {
   return (
     <div className="waveform-divider">

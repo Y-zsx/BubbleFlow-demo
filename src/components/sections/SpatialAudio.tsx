@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { Suspense, useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Edges, Float } from "@react-three/drei";
 import { motion, useInView } from "framer-motion";
@@ -166,9 +166,11 @@ export default function SpatialAudio() {
             gl={{ antialias: true, alpha: true }}
             style={{ background: "transparent" }}
           >
-            <ambientLight intensity={0.3} />
-            <directionalLight position={[3, 4, 3]} intensity={0.8} />
-            <SoundField />
+            <Suspense fallback={null}>
+              <ambientLight intensity={0.3} />
+              <directionalLight position={[3, 4, 3]} intensity={0.8} />
+              <SoundField />
+            </Suspense>
           </Canvas>
         </motion.div>
 

@@ -3,7 +3,7 @@ import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
 import ProductShowcase from "@/components/sections/ProductShowcase";
 import ExperienceScenes from "@/components/sections/ExperienceScenes";
-import SpatialAudio from "@/components/sections/SpatialAudio";
+import LazySpatialAudio from "@/components/sections/LazySpatialAudio";
 import Features from "@/components/sections/Features";
 import Specs from "@/components/sections/Specs";
 import CTA from "@/components/sections/CTA";
@@ -21,7 +21,7 @@ export default function Home() {
         <WaveformDivider />
         <ExperienceScenes />
         <WaveformDivider />
-        <SpatialAudio />
+        <LazySpatialAudio />
         <WaveformDivider />
         <Features />
         <WaveformDivider />
